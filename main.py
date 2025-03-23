@@ -1522,31 +1522,23 @@ for uploaded_file in uploaded_files:
             #     avg_posts_per_user = median_posts_per_user = max_posts_per_user = concentration_ratio = 0
             #     total_users = 0
             
-            if 'user_screen_name' in dataframe.columns:
-                
-                total_posts = len(dataframe)
-                dt = dataframe
-                user_tweet_counts = new_df.groupby(user_column).size().reset_index(name='tweet_count')
+            if 'user_screen_name' in yt.columns:
+                total_posts = len(yt)
+                user_tweet_counts = yt.groupby('user_screen_name').size().reset_index(name='tweet_count')
                 top_users = user_tweet_counts.sort_values(by='tweet_count', ascending=False)
-                total_users = user_tweet_counts[user_column].nunique()
-                
-                total_tweets = new_df.shape[0]
-               
+                total_users = user_tweet_counts.shape[0]
+
+                total_tweets = yt.shape[0]
                 max_tweets_by_user = user_tweet_counts['tweet_count'].max()
-                unique_users_df = dataframe.drop_duplicates(subset='user_name')
-                total_users = len(unique_users_df)       
-                posts_per_user = dt['user_name'].value_counts()
-                
-                avg_posts_per_user = total_tweets/ total_users if total_users > 0 else 0
-                
+
+                avg_posts_per_user = total_tweets / total_users if total_users > 0 else 0
                 max_posts_per_user = max_tweets_by_user
-                
-                top_10_percent_users = max(int(total_users * 0.1), 1)  
-                
+
+                top_10_percent_users = max(int(total_users * 0.1), 1)
                 posts_by_top_users = top_users['tweet_count'].nlargest(top_10_percent_users).sum()
-                
-                
+
                 concentration_ratio = posts_by_top_users / total_posts if total_posts > 0 else 0
+                print(f'Concentration Ratio: {concentration_ratio * 100:.2f}%')
             else:
                 avg_posts_per_user = median_posts_per_user = max_posts_per_user = concentration_ratio = 0
                 total_users = total_posts = 0
