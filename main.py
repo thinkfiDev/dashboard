@@ -301,33 +301,33 @@ for uploaded_file in uploaded_files:
         st.divider()
         
         
-        if st.checkbox("Check for news articles related hashtag"):
-            file_name_news = uploaded_file.name.split('.csv')[0]
+        # if st.checkbox("Check for news articles related hashtag"):
+        #     file_name_news = uploaded_file.name.split('.csv')[0]
             
-            mediastack_news = fetch_news_from_mediastack(
-                file_name_news,
-                peak_time['tweet_time_group'].strftime('%Y-%m-%d')
-            )
+        #     mediastack_news = fetch_news_from_mediastack(
+        #         file_name_news,
+        #         peak_time['tweet_time_group'].strftime('%Y-%m-%d')
+        #     )
             
             
-            all_news = mediastack_news
-            data = []
-            for article in all_news:
+        #     all_news = mediastack_news
+        #     data = []
+        #     for article in all_news:
                 
-                read_more = f'<a href="{article["link"]}" target="_blank">Read More</a>'
-                data.append({
-                    "Title": article["title"],
-                    "Source": article.get("source", "Unknown"),
-                    "Published": article["published"],
-                    "Link": read_more
-                })
+        #         read_more = f'<a href="{article["link"]}" target="_blank">Read More</a>'
+        #         data.append({
+        #             "Title": article["title"],
+        #             "Source": article.get("source", "Unknown"),
+        #             "Published": article["published"],
+        #             "Link": read_more
+        #         })
             
-            df_news = pd.DataFrame(data)
+        #     df_news = pd.DataFrame(data)
             
-            st.write(df_news.to_html(escape=False), unsafe_allow_html=True)
+        #     st.write(df_news.to_html(escape=False), unsafe_allow_html=True)
 
 
-        st.divider()
+        # st.divider()
 
         
         dataframe['tweet_time_group'] = pd.to_datetime(dataframe['tweet_time_group'], errors='coerce')
